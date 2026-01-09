@@ -1,5 +1,37 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const GITHUB_API_BASE = 'https://api.github.com';
+const DEFAULT_HEADERS = {
+  'Accept': 'application/vnd.github.v3+json',
+  'Content-Type': 'application/json',
+  'User-Agent': 'Evolving-Machine-Next.js'
+};
+
+async function handleGitHubRequest(request: NextRequest, path: string, method: string, payload?: any) {
+  const ghToken = process.env.GITHUB_TOKEN;
+  if (!ghToken) {
+    throw new Error('GitHub token not configured');
+  }
+
+  const response = await fetch(`${GITHUB_API_BASE}${path}`, {
+    method,
+    headers: {
+      ...DEFAULT_HEADERS,
+      'Authorization': `token ${ghToken}`
+    },
+    body: payload ? JSON.stringify(payload) : undefined
+  });
+
+  const text = await response.text();
+  const data = text ? JSON.parse(text) : null;
+
+  if (!response.ok) {
+    throw new Error(data?.message || 'GitHub API error');
+  }
+
+  return data;
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -10,32 +42,14 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Path is required' }, { status: 400 });
     }
 
-    const ghToken = process.env.GITHUB_TOKEN;
-    if (!ghToken) {
-      return NextResponse.json({ error: 'GitHub token not configured' }, { status: 500 });
-    }
-
-    const response = await fetch(`https://api.github.com${path}`, {
-      method,
-      headers: {
-        'Authorization': `token ${ghToken}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json',
-        'User-Agent': 'Evolving-Machine-Next.js'
-      }
-    });
-
-    const text = await response.text();
-    const data = text ? JSON.parse(text) : null;
-
-    if (!response.ok) {
-      return NextResponse.json({ error: data?.message || 'GitHub API error', status: response.status }, { status: response.status });
-    }
-
+    const data = await handleGitHubRequest(request, path, method);
     return NextResponse.json(data);
   } catch (error) {
     console.error('GitHub API error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
 
@@ -48,32 +62,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Path is required' }, { status: 400 });
     }
 
-    const ghToken = process.env.GITHUB_TOKEN;
-    if (!ghToken) {
-      return NextResponse.json({ error: 'GitHub token not configured' }, { status: 500 });
-    }
-
-    const response = await fetch(`https://api.github.com${path}`, {
-      method,
-      headers: {
-        'Authorization': `token ${ghToken}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json',
-        'User-Agent': 'Evolving-Machine-Next.js'
-      },
-      body: payload ? JSON.stringify(payload) : undefined
-    });
-
-    const text = await response.text();
-    const data = text ? JSON.parse(text) : null;
-
-    if (!response.ok) {
-      return NextResponse.json({ error: data?.message || 'GitHub API error', status: response.status }, { status: response.status });
-    }
-
+    const data = await handleGitHubRequest(request, path, method, payload);
     return NextResponse.json(data);
   } catch (error) {
     console.error('GitHub API error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
