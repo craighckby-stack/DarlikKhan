@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server';
 
 const GITHUB_API_BASE = 'https://api.github.com';
@@ -7,9 +8,14 @@ const DEFAULT_HEADERS = {
   'User-Agent': 'Evolving-Machine-Next.js'
 };
 
-async function handleGitHubRequest(request: NextRequest, path: string, method: string, payload?: any) {
-  const ghToken = process.env.GITHUB_TOKEN;
-  if (!ghToken) {
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+
+if (!GITHUB_TOKEN) {
+  console.warn('GitHub token not configured');
+}
+
+async function handleGitHubRequest(path: string, method: string, payload?: any): Promise<any> {
+  if (!GITHUB_TOKEN) {
     throw new Error('GitHub token not configured');
   }
 
@@ -17,19 +23,24 @@ async function handleGitHubRequest(request: NextRequest, path: string, method: s
     method,
     headers: {
       ...DEFAULT_HEADERS,
-      'Authorization': `token ${ghToken}`
+      'Authorization': `token ${GITHUB_TOKEN}`
     },
     body: payload ? JSON.stringify(payload) : undefined
   });
 
   const text = await response.text();
-  const data = text ? JSON.parse(text) : null;
-
+  
   if (!response.ok) {
-    throw new Error(data?.message || 'GitHub API error');
+    const data = text ? JSON.parse(text) : null;
+    throw new Error(data?.message || `GitHub API error: ${response.status}`);
   }
 
-  return data;
+  return text ? JSON.parse(text) : null;
+}
+
+function createErrorResponse(error: unknown, status: number = 500) {
+  const message = error instanceof Error ? error.message : 'Internal server error';
+  return NextResponse.json({ error: message }, { status });
 }
 
 export async function GET(request: NextRequest) {
@@ -42,14 +53,11 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Path is required' }, { status: 400 });
     }
 
-    const data = await handleGitHubRequest(request, path, method);
+    const data = await handleGitHubRequest(path, method);
     return NextResponse.json(data);
   } catch (error) {
     console.error('GitHub API error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return createErrorResponse(error);
   }
 }
 
@@ -62,13 +70,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Path is required' }, { status: 400 });
     }
 
-    const data = await handleGitHubRequest(request, path, method, payload);
+    const data = await handleGitHubRequest(path, method, payload);
     return NextResponse.json(data);
   } catch (error) {
     console.error('GitHub API error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Internal server error' },
-      { status: 500 }
-    );
+    return createErrorResponse(error);
   }
 }
