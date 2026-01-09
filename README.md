@@ -1,3 +1,7 @@
+buggy as 
+
+https://darlikkhan.space.z.ai
+
 # 🤖 Self-Evolving AI with Knowledge Base
 
 A production-ready Next.js application featuring an AI that autonomously improves its own code using a knowledge base populated from uploaded documents and external GitHub repositories (Google, DeepSeek, OpenAI, your repos, Z.ai repos).
