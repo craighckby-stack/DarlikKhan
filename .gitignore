@@ -68,3 +68,5 @@ examples/
 
 # Development
 test
+env.local
+.env*
