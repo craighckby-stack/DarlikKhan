@@ -1,141 +1,220 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# 🤖 Self-Evolving AI with Knowledge Base
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+A production-ready Next.js application featuring an AI that autonomously improves its own code using a knowledge base populated from uploaded documents and external GitHub repositories (Google, DeepSeek, OpenAI, your repos, Z.ai repos).
 
-## ✨ Technology Stack
+## ✨ Features
 
-This scaffold provides a robust foundation built with:
-
-### 🎯 Core Framework
-- **⚡ Next.js 15** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
-
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
-
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
-
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Fetch** - Promise-based HTTP request
-
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
-
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
-
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
-
-## 🎯 Why This Scaffold?
-
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
+- 🧠 **Self-Reflection Engine**: AI asks itself deep technical questions and makes informed decisions
+- 🌳 **Knowledge Base System**: Learn from uploaded PDFs/DOCX and external repositories
+- 🔄 **Auto-Evolution**: Mutates code, commits to GitHub, and auto-reloads after deployment
+- 🔒 **Production Security**: Server-side API routes, no exposed tokens
+- 📊 **16 Pre-Seeded Repositories**: Google, DeepSeek, OpenAI, Hugging Face, your repos, Z.ai repos
 
 ## 🚀 Quick Start
 
+### 1. Configure Environment Variables
+
+Edit `.env`:
+
+```env
+GITHUB_TOKEN=ghp_your_token_here
+GEMINI_API_KEY=your_gemini_key_here
+```
+
+### 2. Initialize Database
+
 ```bash
-# Install dependencies
-bun install
+bun run db:push
+bun run db:seed
+```
 
-# Start development server
+### 3. Run Development Server
+
+```bash
 bun run dev
-
-# Build for production
-bun run build
-
-# Start production server
-bun start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your application running.
+Visit `http://localhost:3000`
 
-## 🤖 Powered by Z.ai
+## 📖 Documentation
 
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
+- **[SETUP.md](./SETUP.md)** - Complete setup and usage guide
+- **[DEPLOYMENT.md](./DEPLOYMENT.md)** - GitHub and Vercel deployment guide
 
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
+## 🌳 Pre-Seeded Repositories
 
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
+The system comes with 16 pre-configured repositories to learn from:
 
-## 📁 Project Structure
+### Google
+- `google/gemma-llm`
+- `google/jax`
+- `google/mediapipe`
+- `tensorflow/tensorflow`
+
+### DeepSeek
+- `deepseek-ai/DeepSeek-V2`
+- `deepseek-ai/DeepSeek-V3`
+- `deepseek-ai/DeepSeek-Coder`
+- `deepseek-ai/Janus`
+
+### Your Repositories (Full Circle!)
+- `craighckby-stack/ai-scaffold-`
+- `craighckby-stack/evolution-engine`
+
+### Z.ai
+- `z/zai-web-dev-sdk`
+- `z/zai-core`
+
+### Others
+- `openai/tiktoken`
+- `huggingface/transformers`
+- `facebookresearch/pytorch`
+- `anthropics/anthropic-sdk-python`
+
+## 🛠️ Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript 5
+- **Database**: Prisma (SQLite)
+- **AI**: Google Gemini 2.0
+- **API**: GitHub REST API
+- **Styling**: Tailwind CSS
+- **Components**: shadcn/ui (Lucide icons)
+
+## 📂 Project Structure
 
 ```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
+my-project/
+├── prisma/
+│   ├── schema.prisma      # Database schema
+│   ├── seed.js            # Pre-seeded repositories
+│   └── seed.ts            # TypeScript version
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── github/    # GitHub proxy API
+│   │   │   ├── gemini/    # Gemini API
+│   │   │   ├── documents/ # Document upload/management
+│   │   │   ├── repos/     # Repository management
+│   │   │   ├── repos/sync/ # Repository sync
+│   │   │   └── knowledge/ # Knowledge base search
+│   │   └── page.tsx      # Main application
+│   └── lib/
+│       ├── db.ts          # Prisma client
+│       └── utils.ts      # Utilities
+├── db/                   # SQLite database
+├── .env                  # Environment variables
+├── package.json
+└── README.md
 ```
 
-## 🎨 Available Features & Components
+## 🔄 How It Works
 
-This scaffold includes a comprehensive set of modern web development tools:
+```
+AI Self-Reflection
+    ↓
+Technical Question Generated
+    ↓
+AI Answers Its Own Question
+    ↓
+Search Knowledge Base for Relevant Code
+    ↓
+Decision: Mutate Code? (YES/NO)
+    ↓
+[If YES] Select Random File
+    ↓
+AI Generates Optimized Code (using knowledge base)
+    ↓
+Commit to GitHub
+    ↓
+CI/CD Build (Vercel)
+    ↓
+Monitor Deployment
+    ↓
+Auto-Reload on Success
+```
 
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
+## 🎯 Usage
 
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
+### 1. Evolution Tab
+- Watch real-time evolution logs
+- Start/stop the evolution loop
+- Monitor deployment progress
 
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
+### 2. Knowledge Base Tab
+- Upload PDF/DOCX documents
+- View uploaded documents
+- Delete unwanted documents
 
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Fetch + TanStack Query
-- **State Management**: Simple and scalable with Zustand
+### 3. Repositories Tab
+- View pre-seeded repositories
+- Sync repositories to knowledge base
+- Add custom repositories
+- Remove repositories
 
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
+### Configuration Sidebar
+- Set your GitHub repository details
+- Save configuration
+- View top knowledge sources
 
-## 🤝 Get Started with Z.ai
+## ⚠️ Important Notes
 
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
+- **The AI modifies its own code** - it can introduce bugs
+- **Keep backups** - use GitHub's revert feature
+- **Monitor closely** - especially in the beginning
+- **Start on a test branch** - don't evolve `main` immediately
+- **Rate limits** - GitHub API has limits, sync repos in batches
+
+## 🔧 Customization
+
+- **Evolution frequency**: Edit `setInterval` in `src/app/page.tsx`
+- **AI model**: Edit model in `src/app/api/gemini/route.ts`
+- **Pre-seeded repos**: Edit `prisma/seed.js`
+- **File size limits**: Edit `src/app/api/repos/sync/route.ts`
+
+## 📊 Knowledge Base Statistics
+
+- **Total Documents**: Shown in status bar
+- **Top Sources**: Displayed in right sidebar
+- **By Language**: Available via `/api/knowledge?stats=true`
+- **By Repository**: Available via `/api/knowledge?stats=true`
+
+## 🆘 Troubleshooting
+
+### GitHub Token Issues
+- Ensure token has `repo` and `workflow` scopes
+- Verify token is not expired
+- Check environment variables
+
+### Gemini API Issues
+- Verify API key is valid
+- Check quota limits
+- Ensure model is enabled
+
+### Deployment Issues
+- Check Vercel build logs
+- Verify environment variables
+- Ensure GitHub Actions are working
+
+### Database Issues
+- Run `bun run db:push` to sync schema
+- Run `bun run db:seed` to add repositories
+- Check SQLite database file permissions
+
+## 📄 License
+
+Use responsibly. This is an experimental system designed for research and learning.
+
+## 🤝 Contributing
+
+This is a personal project, but feel free to fork and experiment!
+
+## 📞 Support
+
+For detailed setup and deployment instructions, see:
+- [SETUP.md](./SETUP.md)
+- [DEPLOYMENT.md](./DEPLOYMENT.md)
 
 ---
 
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+**Built with ❤️ using Next.js, Google Gemini, and GitHub API**

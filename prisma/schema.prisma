@@ -21,12 +21,42 @@ model User {
   updatedAt DateTime @updatedAt
 }
 
-model Post {
+model KnowledgeBase {
   id        String   @id @default(cuid())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String
+  fileName  String
+  filePath  String
+  content   String
+  source    String   // 'upload', 'repository', or 'external'
+  fileType  String?  // 'pdf', 'docx', or file extension like 'ts', 'js', 'py'
+  repoName  String?  // For repository-sourced files
+  repoOwner String?  // For repository-sourced files
+  language  String?  // e.g., 'typescript', 'javascript', 'python'
+  tags      String?  // Comma-separated tags for categorization
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model ExternalRepo {
+  id        String   @id @default(cuid())
+  repoOwner String
+  repoName  String
+  branch    String   @default("main")
+  isActive  Boolean  @default(true)
+  lastSync  DateTime?
+  filesCount Int     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EvolutionLog {
+  id          String   @id @default(cuid())
+  cycle       Int
+  question    String?
+  answer      String?
+  decision    String?  // 'yes' or 'no'
+  filePath    String?
+  commitSha   String?
+  status      String   // 'success', 'failed', 'skipped'
+  errorMsg    String?
+  timestamp   DateTime @default(now())
 }
